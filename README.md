@@ -1,6 +1,6 @@
 # CS3 Case Study: Fine-Tune a Torchvision Model for Plant Classification
 
-![image](https://github.com/user-attachments/assets/6ff95681-4495-45b9-a9af-dbf04bb13490)
+<img width="1082" alt="image" src="https://github.com/user-attachments/assets/09999535-b984-414f-aab3-6d123840250a" />
 
 ## Repo Format
 
