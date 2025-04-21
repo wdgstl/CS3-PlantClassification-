@@ -1,0 +1,5 @@
+Reflect on your model performance by answering the following questions:
+- Did you outpeform the past models? 
+- Which ones did your model perform better on worse than? 
+- Why are you seeing these results? 
+- Reflect on the differences in architecture among your custom model and the other models.
