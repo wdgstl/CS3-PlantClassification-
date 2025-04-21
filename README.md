@@ -25,9 +25,9 @@
 6. Load the testing data (in parquet form), from [here](https://huggingface.co/datasets/mikehemberger/plantnet300K/tree/main/data). You should save the data in the [data folder](https://github.com/wdgstl/CS3-PlantClassification-/tree/main/data)
 7. Complete TODOs in [main.py](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/scripts/main.py)
    - update the lines to initialize the classifier model
-   - uppdate the lines to predict using your new model
+   - update the lines to predict using your new model
 8. Run [main.py](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/scripts/main.py) to get: your fine-tuned models evaluation metrics and an exposed FastAPI that allows you to: 1. predict the species of a plant given an image file, 2. predict the edibiity of a plant given its name.
-9. Reflect on your model performance by answering these questions in [reflection.txt](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/output/reflection.txt). Did you outpeform the past models? Which ones did your model perform better on worse than? Why are you seeing these results? Reflect on the differences in architecture among your custom model and the other models.  
+9. Reflect on your model performance by answering these questions in [reflection.txt](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/output/reflection.txt). Did you outpeform the past models? Which ones did your model perform better on worse than? Why are you seeing these results? Reflect on the differences in architecture among your custom model and the other models. You should also report your evaluation metrics in this file. 
 
 ## Optional 
 To use the edibility classification feature of this tool, you must have an OpenAI API key. To use this feature, create a .env file inside of the scripts directory, and simple set: OPENAI_KEY = "YOUR_KEY".
