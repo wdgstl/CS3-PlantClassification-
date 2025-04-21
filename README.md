@@ -2,13 +2,16 @@
 
 ![image](https://github.com/user-attachments/assets/6ff95681-4495-45b9-a9af-dbf04bb13490)
 
+## Repo Format
+
 ## Setup
 - create venv: python3 -m venv myvenv
 - activate venv: source myvenv/bin/activate
 - install dependencies: pip3 install - requirements.txt
 
-##  Steps
-1. Research and select model (visit )
+## Steps
+1. Review past model performance (out
+1. Research and select model ([visit](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/output/model_comparison.png) )
 2. Complete TODOs in classisifer.py
    - update __init__.py to initialize model according to torchvision models documentation
    - update fine_tune.py to update the weights of self.model
