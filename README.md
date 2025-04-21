@@ -6,7 +6,7 @@
 - [data folder](https://github.com/wdgstl/CS3-PlantClassification-/tree/main/data): contains class mappings json (maps output label to species name) and will store the train, test, and validation data
 - [output folder](https://github.com/wdgstl/CS3-PlantClassification-/tree/main/output): contains the model performance comparison and the reflection.txt file
 - [scripts folder](https://github.com/wdgstl/CS3-PlantClassification-/tree/main/scripts): contains all python classes and code
-- [resources folder](): contains helpful resources and information about the plant image data.
+- [resources folder](https://github.com/wdgstl/CS3-PlantClassification-/tree/main/resources): contains helpful resources and information about the plant image data.
 
 ## Setup
 - create venv: python3 -m venv myvenv
