@@ -1,12 +1,6 @@
-import sys
 from pathlib import Path
-
-# Add the parent directory of 'scripts' to the path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
-from scripts.describe_plant import get_description
-from scripts.classifier import * 
-from scripts.fetch_data import pull_data
+from describe_plant import get_description
+from classifier import * 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
@@ -20,24 +14,15 @@ load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-pull_data()
-
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], 
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-BASE_DIR = Path(__file__).resolve().parent
+#TODO Modify these 2 lines to fit your new model
+model = classifier(custom_train_job = True, model_type= "your_torchvision_model")
+model.fine_tune(path_to_training_data="path", path_to_validation_data = "path")
 
-model = classifier(
-    model_path=str(BASE_DIR.parent / "data/models/resnet18_weights_best_acc.tar"),
-    class_mapping_path=str(BASE_DIR.parent / "data/class_mapping/plantnet300K_species_names.json")
-)
-
+#TODO Modify this line to point to then folder holding the test parquets 
+preds = model.predict(image_path="path_to_test_set")
+print(preds)
 
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):

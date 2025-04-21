@@ -1,20 +1,10 @@
-import sys
 from pathlib import Path
 import os
 import pandas as pd
 from sklearn.metrics import classification_report
 from tqdm import tqdm
 import torch.nn as nn
-
-
-# Add the parent directory of 'scripts' to the path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
-
-try:
-    from scripts.utils import load_model  
-except ModuleNotFoundError:
-    from backend.scripts.utils import load_model 
-
+from utils import load_model
 from torchvision.models import resnet18, resnet50, densenet121, mobilenet_v3_large, shufflenet_v2_x1_0, squeezenet1_0, efficientnet_b0, densenet201
 from torchvision import models, transforms
 import torch
@@ -23,42 +13,63 @@ import json
 import subprocess
 import sys
 
+#For a custom train job, you will call classifier as follows; my_model = classisifer(custom_train_job = True, model_type = your_torchvision_model)
+
 class classifier:
-    def __init__(self, model_type = resnet18, model_path=None, class_mapping_path=None):
-        self.model_name = model_type.__name__
-        if self.model_name == 'shufflenet_v2_x1_0':
-            self.model_name = 'shufflenet'
-        elif self.model_name == 'squeezenet1_0':
-            self.model_name = 'squeezenet'
-        self.default_model_url = f'https://lab.plantnet.org/seafile/d/01ab6658dad6447c95ae/files/?p=%2F{self.model_name}_weights_best_acc.tar&dl=1'
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        if self.model_name == 'inception_v3':
-            self.model = model_type(num_classes = 1081, aux_logits = False)
-        elif self.model_name == 'squeezenet1_0':
-            self.model = model_type()
-            self.model.classifier[1] = nn.Conv2d(
-                in_channels=512,
-                out_channels=1081,  
-                kernel_size=(1, 1),
-                stride=(1, 1)
-            )
-            self.model.num_classes = 1081 
+    def __init__(self, custom_train_job = False, model_type = resnet18, model_path=None):
+        if not custom_train_job:
+            self.model_name = model_type.__name__
+            if self.model_name == 'shufflenet_v2_x1_0':
+                self.model_name = 'shufflenet'
+            elif self.model_name == 'squeezenet1_0':
+                self.model_name = 'squeezenet'
+            self.default_model_url = f'https://lab.plantnet.org/seafile/d/01ab6658dad6447c95ae/files/?p=%2F{self.model_name}_weights_best_acc.tar&dl=1'
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            if self.model_name == 'inception_v3':
+                self.model = model_type(num_classes = 1081, aux_logits = False)
+            elif self.model_name == 'squeezenet1_0':
+                self.model = model_type()
+                self.model.classifier[1] = nn.Conv2d(
+                    in_channels=512,
+                    out_channels=1081,  
+                    kernel_size=(1, 1),
+                    stride=(1, 1)
+                )
+                self.model.num_classes = 1081 
+            else:
+                self.model = model_type(num_classes = 1081)
+            #supplied custom model
+            if model_path:
+                self.model_path = model_path
+            #otherwise, pull default
+            else:
+                print(f"Downloading model from {self.default_model_url}\n")
+                output_file = os.path.join(base_dir, "..", "data", "models", f"{self.model_name}_weights_best_acc.tar")
+                subprocess.run(["wget", "-O", output_file, self.default_model_url])
+                self.model_path = output_file
+                print("Download Complete")
+            
+            output_file = os.path.join(base_dir, "..", "data", "class_mapping", "plantnet300K_species_names.json")
+            self.class_mapping_path = output_file
+            load_model(self.model, filename=self.model_path, use_gpu=False)
+            
+        #TODO: make any modifications to the model initialization. Gain inspiration from the model types above. Recall the final layer should output 1081 classes. Hint, pay attention to Step 1 in reference material.
         else:
-            self.model = model_type(num_classes = 1081)
-        #supplied custom model
-        if model_path:
-            self.model_path = model_path
-        #otherwise, pull default
-        else:
-            print(f"Downloading model from {self.default_model_url}\n")
-            output_file = os.path.join(base_dir, "..", "data", "models", f"{self.model_name}_weights_best_acc.tar")
-            subprocess.run(["wget", "-O", output_file, self.default_model_url])
-            self.model_path = output_file
-            print("Download Complete")
+            self.model_name = model_type.__name__
+            self.model = "TODO"
+
+
+
+    #TODO implement the fine_tune.py function for the classisifer class. This function should modify the weights of self.model by fine tuning a new torchvision model of your choice on the training dat. Hint, pay attention to Steps 3 & 4 in reference material.
+    def fine_tune(self, path_to_training_data):
         
-        output_file = os.path.join(base_dir, "..", "data", "class_mapping", "plantnet300K_species_names.json")
-        self.class_mapping_path = output_file
-        load_model(self.model, filename=self.model_path, use_gpu=False)
+        #TODO implement the data_preprocessing function. This function should take in the path to the training and validation data, and prepare it to be fed into the model for fine tuning. Hint, pay attention to Step 2 in reference material.
+        def preprocess_data(path_to_training_data, path_to_validation_data):
+            test_data = "TODO"
+            val_data = "TODO"
+            return test_data, val_data
+        
+        test_data, validation_data = preprocess_data(path_to_training_data="path_here", path_to_validation_data="path_here")
             
     
     def predict(self, image_path):
@@ -168,24 +179,3 @@ class classifier:
             'weighted_f1': weighted_f1
         })
         return metrics
-
-
-def main():
-    #Option 1: Specify Path
-    plant_classifier = classifier(model_path='../data/models/resnet18_weights_best_acc.tar', class_mapping_path= '../data/class_mapping/plantnet300K_species_names.json')
-    #Option 3: Load Model + Class Mapping from Cloud
-    # plant_classifier = classifier()
-    argv = sys.argv
-    image_path = argv[1]
-
-    predictions = plant_classifier.predict(image_path=image_path)
-    for p in predictions:
-        print(p)
-
-if __name__ == "__main__":
-    main()        
-
-
-
-
-
