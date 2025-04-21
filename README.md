@@ -10,7 +10,7 @@
 - install dependencies: pip3 install - requirements.txt
 
 ## Steps
-1. Review ([past model performance](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/output/model_comparison.png) )
+1. Review [past model performance](https://github.com/wdgstl/CS3-PlantClassification-/blob/main/output/model_comparison.png)
 2. Research other torchvision model architectures, and select ([one](https://pytorch.org/vision/0.9/models.html))
 3. Review the steps in ([fine tuning](https://dev.to/santoshpremi/fine-tuning-a-pre-trained-model-in-pytorch-a-step-by-step-guide-for-beginners-4p6l)) a torchvision model
 4. Load the training and validaton data from ([Pl@ntNet-300K](https://zenodo.org/records/4726653#.YhNbAOjMJPY)) Hint: you may find it easier and more efficient to load the data in parquet form - it has been repackaged ([here](https://huggingface.co/datasets/mikehemberger/plantnet300K/tree/main/data)). You should save the data in the ([data folder](https://github.com/wdgstl/CS3-PlantClassification-/tree/main/data))
