@@ -1,10 +1,6 @@
 ## CS3 Case Study: Fine-Tune a Torchvision Model for Plant Classification
 
-
-
-<img width="19" alt="image" src="https://github.com/user-attachments/assets/f57ea81a-3400-4907-874c-19a77b6d38ae" />
-
-
+![image](https://github.com/user-attachments/assets/6ff95681-4495-45b9-a9af-dbf04bb13490)
 
 # Setup
 - create venv: python3 -m venv myvenv
