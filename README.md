@@ -1,13 +1,13 @@
-## CS3 Case Study: Fine-Tune a Torchvision Model for Plant Classification
+# CS3 Case Study: Fine-Tune a Torchvision Model for Plant Classification
 
 ![image](https://github.com/user-attachments/assets/6ff95681-4495-45b9-a9af-dbf04bb13490)
 
-# Setup
+## Setup
 - create venv: python3 -m venv myvenv
 - activate venv: source myvenv/bin/activate
 - install dependencies: pip3 install - requirements.txt
 
-# Steps
+##  Steps
 1. Research and select model (visit )
 2. Complete TODOs in classisifer.py
    - update __init__.py to initialize model according to torchvision models documentation
